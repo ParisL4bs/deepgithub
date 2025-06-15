@@ -1,27 +1,18 @@
-"use client"
+import '../src/app/globals.css'
 
-import type { ReactNode } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "../styles/App.css";
-import "../styles/index.css";
+export const metadata = {
+  title: 'Agent Management Software',
+  description: 'Manage your agents efficiently',
+}
 
-const queryClient = new QueryClient();
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            {children}
-          </TooltipProvider>
-        </QueryClientProvider>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
-  );
+  )
 }

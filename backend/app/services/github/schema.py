@@ -1,57 +1,5 @@
-from enum import Enum
-from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, Field
-
-
-class RepoStatus(str, Enum):
-    NOT_INDEXED = "not_indexed"
-    PENDING = "pending"
-    INDEXED = "indexed"
-    FAILED = "failed"
-
-
-class RepositoryOwner(BaseModel):
-    login: str
-    id: int
-    avatar_url: str
-
-
-class RepositoryInfo(BaseModel):
-    id: int
-    name: str
-    full_name: str
-    description: Optional[str] = None
-    default_branch: str
-    stars: int
-    forks: int
-    created_at: str
-    updated_at: str
-    size: int
-    owner: RepositoryOwner
-
-
-class FileNode(BaseModel):
-    path: str
-    type: str
-    content: Optional[str] = None
-    size: Optional[int] = None
-
-
-class RepositoryStatusResponse(BaseModel):
-    status: RepoStatus
-    file_count: Optional[int] = None
-    indexed_at: Optional[str] = None
-    message: Optional[str] = None
-
-
-class IndexingRequest(BaseModel):
-    owner: str
-    repo: str
-    branch: Optional[str] = None
-
-
-class CheckoutResponse(BaseModel):
-    cache_name: str
+from pydantic import BaseModel
+from typing import Optional, Dict, Any, List
 
 
 class ChatRequest(BaseModel):
@@ -61,84 +9,24 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
-    code_snippets: List[Dict[str, Any]] = Field(default_factory=list)
-    source_files: List[Dict[str, str]] = Field(default_factory=list)
+    code_snippets: Optional[List[Dict[str, Any]]] = None
+    source_files: Optional[List[Dict[str, str]]] = None
 
 
-class FileDescription(BaseModel):
-    path: str
-    description: str
-    type: str
-    size: Optional[int] = None
-    language: Optional[str] = None
+class RepositoryStatusResponse(BaseModel):
+    status: str
+    file_count: Optional[int] = None
+    indexed_at: Optional[str] = None
+    message: Optional[str] = None
 
 
-class DocsResponse(BaseModel):
-    repository: RepositoryInfo
-    files: List[FileDescription]
-
-class RepoStatus(str, Enum):
-    NOT_INDEXED = "not_indexed"
-    PENDING = "pending"
-    INDEXED = "indexed"
-    FAILED = "failed"
+class AgentRequest(BaseModel):
+    prompt: str
+    context: Optional[Dict[str, Any]] = None
 
 
-class RepositoryOwner(BaseModel):
-    login: str
-    id: int
-    avatar_url: str
-
-
-class RepositoryInfo(BaseModel):
-    id: int
-    name: str
-    full_name: str
-    description: Optional[str] = None
-    default_branch: str
-    stars: int
-    forks: int
-    created_at: str
-    updated_at: str
-    size: int
-    owner: RepositoryOwner
-
-class FileDescription(BaseModel):
-    path: str
-    description: str
-    type: str
-    size: Optional[int] = None
-    language: Optional[str] = None
-
-class RepoStatus(str, Enum):
-    NOT_INDEXED = "not_indexed"
-    PENDING = "pending"
-    INDEXED = "indexed"
-    FAILED = "failed"
-
-
-class RepositoryOwner(BaseModel):
-    login: str
-    id: int
-    avatar_url: str
-
-
-class RepositoryInfo(BaseModel):
-    id: int
-    name: str
-    full_name: str
-    description: Optional[str] = None
-    default_branch: str
-    stars: int
-    forks: int
-    created_at: str
-    updated_at: str
-    size: int
-    owner: RepositoryOwner
-
-class FileDescription(BaseModel):
-    path: str
-    description: str
-    type: str
-    size: Optional[int] = None
-    language: Optional[str] = None
+class AgentResponse(BaseModel):
+    response: str
+    agent_id: str
+    execution_time: float
+    metadata: Optional[Dict[str, Any]] = None 
