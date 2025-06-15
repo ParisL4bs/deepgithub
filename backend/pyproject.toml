@@ -19,8 +19,6 @@ dependencies = [
     "instructor>=1.8.1",
     "anthropic>=0.51.0",
     "langfuse>=2.60.4",
-    "smolagents",
-    "smolagents[toolkit]",
 ]
 
 [dependency-groups]
